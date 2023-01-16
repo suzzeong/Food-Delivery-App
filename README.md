@@ -1,5 +1,5 @@
-[ZeroCho_food-delivery-app](https://github.com/ZeroCho/food-delivery-app)
-[Delivery icons created by dreamicons - Flaticon](https://www.flaticon.com/free-icons/delivery)
+- [ZeroCho_food-delivery-app](https://github.com/ZeroCho/food-delivery-app)
+- [Delivery icons created by dreamicons - Flaticon](https://www.flaticon.com/free-icons/delivery)
 
 # 첫 시작(setting)
 [공식문서](https://reactnative.dev/)
@@ -214,14 +214,14 @@ function App() {
 
 export default App;
 ```
-- safe-area가 적용되어 있음(설명)
+- NavigationContainer 내에 safe-area가 적용되어 있음
 - NavigationContainer: 내비게이션 상태 저장
 - Navigator 안에 Screen들 배치
 - Screen name 대소문자 상관 없음, component는 보통 두 가지 방식 사용(컴포넌트 그 자체 vs Render Callback)
 - props로 navigation과 route가 전달됨
 - Pressable, Button, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, TouchableNativeFeedback
 - navigation.navigate로 이동 가능
-- navigation.push로 쌓기 가능
+- navigation.push로 쌓기 가능(브라우저의 history와 같은 개념)
 - navigation.goBack으로 이전으로 이동
 - params 추가 가능(params에 user같은 객체를 통째로 넣지 말기, id를 넣고 user는 글로벌 스토어에 넣기)
 - Screen options.title: 제목
@@ -231,7 +231,7 @@ export default App;
 - Screen options.headerShown로 헤더표시여부
 - Screen options.headerTitle로 커스텀 컴포넌트
 - Screen options.headerRight로 우측 버튼(useLayoutEffect)
-[옵션 목록](https://reactnavigation.org/docs/screen-options)
+- [옵션 목록](https://reactnavigation.org/docs/screen-options)
 
 ## 실제 라우터 만들기 (ch1)
 ```shell

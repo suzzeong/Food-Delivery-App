@@ -76,7 +76,7 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer> {/* safe-area가 적용되어 있음 */}
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
