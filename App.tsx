@@ -29,10 +29,10 @@ function HomeScreen({navigation}: HomeScreenProps) {
   }, [navigation]);
 
   return (
-    <>
+    <View style={{flexDirection: 'row'}}>
       <View
         style={{
-          flex: 2,
+          flex: 5,
           backgroundColor: 'yellow',
           justifyContent: 'flex-end', // 웹: alignItems
           alignItems: 'center', // 웹: justifyContent
@@ -41,16 +41,16 @@ function HomeScreen({navigation}: HomeScreenProps) {
           onPress={onClick}
           style={{
             backgroundColor: 'blue',
-            paddingHorizontal: 40,  // 좌우
-            paddingVertical: 20,  // 상하
+            paddingHorizontal: 40, // 좌우
+            paddingVertical: 20, // 상하
           }}>
           <Text style={{color: 'white'}}>Home Screen</Text>
         </Pressable>
       </View>
-      <View style={{flex: 5, backgroundColor: 'orange'}}>
+      <View style={{flex: 2, backgroundColor: 'orange'}}>
         <Text>Second</Text>
       </View>
-    </>
+    </View>
   );
 }
 
@@ -84,6 +84,9 @@ function App() {
           options={{title: '홈화면'}}
         />
         <Stack.Screen name="Details" component={DetailsScreen} />
+        {/* <Stack.Screen name="Details">
+          {(props) => <DetailsScreen {...props} />}
+        </Stack.Screen> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
