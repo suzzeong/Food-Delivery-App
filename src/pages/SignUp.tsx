@@ -1,11 +1,12 @@
 import React from 'react';
+import {Text, View} from 'react-native';
 
-const SignUp = () => {
+function SignUp() {
   return (
-    <div>
-      
-    </div>
+    <View>
+      <Text>회원가입</Text>
+    </View>
   );
-};
+}
 
 export default SignUp;

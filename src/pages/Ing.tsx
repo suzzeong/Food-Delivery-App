@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 
-function SignIn() {
+function Ing() {
   return (
     <View>
-      <Text>로그인</Text>
+      <Text>지도</Text>
     </View>
   );
 }
 
-export default SignIn;
+export default Ing;
