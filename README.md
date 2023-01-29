@@ -380,7 +380,7 @@ npm i react-native-keyboard-aware-scrollview
 - react-native-keyboard-aware-scroll-view 라이브러리는 타입이 있음
 
 types/react-native-keyboard-aware-scroll-view
-```types/react-native-keyboard-aware-scroll-view.d.ts
+```typescript jsx
 declare module 'react-native-keyboard-aware-scrollview' {
   import * as React from 'react';
   import {Constructor, ViewProps} from 'react-native';
@@ -394,14 +394,36 @@ declare module 'react-native-keyboard-aware-scrollview' {
 ```
 src/components/DismissKeyBoardView.tsx
 ```typescript jsx
+import React from 'react';
+import {
+  TouchableWithoutFeedback,
+  Keyboard,
+  StyleProp,
+  ViewStyle,
+  KeyboardAvoidingView
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
+const DismissKeyboardView: React.FC<{
+  style?: StyleProp<ViewStyle>;
+  children: React.ReactNode;
+}> = ({children, ...props}) => (
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <KeyboardAwareScrollView {...props} style={props.style}>
+      {children}
+    </KeyboardAwareScrollView>
+  </TouchableWithoutFeedback>
+);
+
+export default DismissKeyboardView;
 ```
 ## 서버 요청 보내기(ch2)
 
 back 서버 실행 필요, DB 없이도 되게끔 만들어둠. 서버 재시작 시 데이터는 날아가니 주의
 ```shell
 # 터미널 하나 더 켜서
-cd back
+cd C:\Users\back 복사된주소
+npm i
 npm start
 ```
 
@@ -409,7 +431,67 @@ npm start
 ```shell
 npm i @reduxjs/toolkit react-redux redux-flipper
 ```
-src/store/index.ts와 src/store/reducer.ts, src/slices/user.ts 작성
+src/store/index.ts 작성
+```typescript jsx
+import {configureStore} from '@reduxjs/toolkit';
+import {useDispatch} from 'react-redux';
+import rootReducer from './reducer';
+
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => {
+    if (__DEV__) {
+      const createDebugger = require('redux-flipper').default;
+      return getDefaultMiddleware().concat(createDebugger());
+    }
+    return getDefaultMiddleware();
+  },
+});
+export default store;
+
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+```
+
+src/store/reducer.ts
+```typescript jsx
+import {combineReducers} from 'redux';
+
+import userSlice from '../slices/user';
+
+const rootReducer = combineReducers({
+  user: userSlice.reducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+export default rootReducer;
+```
+
+src/slices/user.ts
+```typescript jsx
+import {createSlice} from '@reduxjs/toolkit';
+
+const initialState = {
+  name: '',
+  email: '',
+  accessToken: '',
+  refreshToken: '',
+};
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setUser(state, action) {
+      state.email = action.payload.email;
+      state.name = action.payload.name;
+      state.accessToken = action.payload.accessToken;
+    },
+  },
+  extraReducers: builder => {},
+});
+
+export default userSlice;
+```
 
 AppInner.tsx 생성 및 isLoggedIn을 redux로 교체(AppInner 분리 이유는 App.tsx에서 useSelector를 못 씀)
 
