@@ -13,6 +13,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../AppInner';
 import DismissKeyboardView from '../components/DismissKeyboardView';
 import axios, {AxiosError} from 'axios';
+import Config from 'react-native-config';
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -65,13 +66,10 @@ function SignUp({navigation}: SignUpScreenProps) {
       setLoading(true);
       // axios(http 메서드) - post, get, put, patch, delete, head, options
       const response = await axios.post(
-        '/user',
-        {email, name, password},
-        // {
-        //   header: {
-        //     token:'고유한 값'
-        //   },
-        // },
+        `${Config.API_URL}`,
+        {email, name, 
+          password // hash화(일반적), 양방향 암호와
+        },
       );
       console.log(response);
       Alert.alert('알림', '회원가입 되었습니다.');
