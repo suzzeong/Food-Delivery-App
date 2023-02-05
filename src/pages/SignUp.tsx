@@ -65,26 +65,28 @@ function SignUp({navigation}: SignUpScreenProps) {
     try {
       setLoading(true);
       // axios(http 메서드) - post, get, put, patch, delete, head, options
-      const response = await axios.post(
-        `${Config.API_URL}`,
-        {email, name, 
-          password // hash화(일반적), 양방향 암호와
-        },
-      );
+      console.log(Config.API_URL);
+      const response = await axios.post(`${Config.API_URL}`, {
+        email,
+        name,
+        password, // hash화(일반적), 양방향 암호와
+      });
       console.log(response);
       Alert.alert('알림', '회원가입 되었습니다.');
+      navigation.navigate('SignIn');
     } catch (error) {
       const errorResponse = (error as AxiosError<{message: string}>).response;
       console.error();
       if (errorResponse) {
-        Alert.alert('알림', errorResponse.data?.message);
+        Alert.alert('알림', errorResponse.data.message);
       }
     } finally {
       setLoading(false);
     }
-  }, [loading, email, name, password]);
+  }, [navigation, loading, email, name, password]);
 
   const canGoNext = email && name && password;
+  
   return (
     <DismissKeyboardView>
       <View style={styles.inputWrapper}>

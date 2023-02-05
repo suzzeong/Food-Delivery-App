@@ -532,6 +532,10 @@ npm i react-native-config
 ```typescript jsx
 import Config from 'react-native-config';
 ```
+
+android에서 http 요청이 안 보내지면
+- android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:usesCleartextTraffic="true" 추가
+
 -Android에서 Config가 적용이 안 되면 다음 추가해야함
 
 android/app/proguard-rules.pro
@@ -576,8 +580,6 @@ const 값 = await EncryptedStorage.getItem('키');
 src/pages/SignUp.tsx, src/pages/SignIn.tsx
 ```
 ```
-android에서 http 요청이 안 보내지면
-- android/app/src/main/AndroidManifest.xml 에서 <application> 태그에 android:usesCleartextTraffic="true" 추가
 
 ActivityIndicator로 로딩창 꾸미기
 
