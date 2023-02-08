@@ -66,7 +66,7 @@ function SignUp({navigation}: SignUpScreenProps) {
       setLoading(true);
       // axios(http 메서드) - post, get, put, patch, delete, head, options
       console.log(Config.API_URL);
-      const response = await axios.post(`${Config.API_URL}`, {
+      const response = await axios.post(`${Config.API_URL}/user`, {
         email,
         name,
         password, // hash화(일반적), 양방향 암호와
