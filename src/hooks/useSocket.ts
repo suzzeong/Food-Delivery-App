@@ -14,7 +14,7 @@ const useSocket = (): [typeof socket, () => void] => {
   if (!socket) {
     socket = io(`${Config.API_URL}`, {
       transports: ['websocket'],
-      path: '/socket-io',
+      // path: '/socket-io',
     });
   }
   return [socket, disconnect];
