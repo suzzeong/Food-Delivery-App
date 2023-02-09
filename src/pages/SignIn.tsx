@@ -54,13 +54,12 @@ function SignIn({navigation}: SignInScreenProps) {
         userSlice.actions.setUser({
           name: response.data.data.name,
           email: response.data.data.email,
-          accessToken: response.data.data.accessToken,
-          refreshToken: response.data.data.refreshToken,
+          accessToken: response.data.data.accessToken,  // 유효기간 (10분, 5분, 1시간)
         }),
       );
       await EncryptedStorage.setItem(
         'refreshToken',
-        response.data.data.refreshToken,
+        response.data.data.refreshToken,  // 시간 연장: 유효기간 (1일, 30일, 1년)
       );
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
