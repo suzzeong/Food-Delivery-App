@@ -683,7 +683,7 @@ AppInner.tsx
 ```typescript
   // 앱 실행 시 토큰 있으면 로그인하는 코드
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     const getTokenAndRefresh = async () => {
       try {
@@ -722,13 +722,175 @@ AppInner.tsx
 ## 주문 데이터 리덕스에 저장하기
 src/slices/order.ts
 ```typescript
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+export interface Order {
+  orderId: string;
+  start: {
+    latitude: number;
+    longitude: number;
+  };
+  end: {
+    latitude: number;
+    longitude: number;
+  };
+  price: number;
+}
+
+interface initialState {
+  orders: Order[];
+  deliveries: Order[];
+}
+
+const initialState: initialState = {
+  orders: [],
+  deliveries: [],
+};
+
+const orderSlice = createSlice({
+  name: 'order',
+  initialState,
+  reducers: {
+    addOrder(state, action: PayloadAction<Order>) {
+      state.orders.push(action.payload);
+    },
+    acceptOrder(state, action: PayloadAction<string>) {
+      const index = state.orders.findIndex(v => v.orderId === action.payload);
+      if (index > -1) {
+        state.deliveries.push(state.orders[index]);
+        state.orders.splice(index, 1);
+      }
+    },
+    rejectOrder(state, action) {
+      const index = state.orders.findIndex(v => v.orderId === action.payload);
+      if (index > -1) {
+        state.orders.splice(index, 1);
+      }
+      const delivery = state.deliveries.findIndex(
+        v => v.orderId === action.payload,
+      );
+      if (delivery > -1) {
+        state.deliveries.splice(delivery, 1);
+      }
+    },
+  },
+  extraReducers: builder => {},
+});
+
+export default orderSlice;
 ```
 
 ## 수익금 확인하기
 src/pages/Settings.tsx
-```
+```typescript
+import React, {useCallback, useEffect} from 'react';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import axios, {AxiosError} from 'axios';
+import Config from 'react-native-config';
+import {useAppDispatch} from '../store';
+import userSlice from '../slices/user';
+import {useSelector} from 'react-redux';
+import {RootState} from '../store/reducer';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
+function Settings() {
+  const money = useSelector((state: RootState) => state.user.money);
+  const name = useSelector((state: RootState) => state.user.name);
+  const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    async function getMoney() {
+      const response = await axios.get<{data: number}>(
+        `${Config.API_URL}/showmethemoney`,
+        {
+          headers: {authorization: `Bearer ${accessToken}`},
+        },
+      );
+      dispatch(userSlice.actions.setMoney(response.data.data));
+    }
+    getMoney();
+  }, [accessToken, dispatch]);
+
+  const onLogout = useCallback(async () => {
+    try {
+      await axios.post(
+        `${Config.API_URL}/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      Alert.alert('알림', '로그아웃 되었습니다.');
+      dispatch(
+        userSlice.actions.setUser({
+          name: '',
+          email: '',
+          accessToken: '',
+        }),
+      );
+      await EncryptedStorage.removeItem('refreshToken');
+    } catch (error) {
+      const errorResponse = (error as AxiosError).response;
+      console.error(errorResponse);
+    }
+  }, [accessToken, dispatch]);
+
+  return (
+    <View>
+      <View style={styles.money}>
+        <Text style={styles.moneyText}>
+          {name}님의 수익금{' '}
+          <Text style={{fontWeight: 'bold'}}>
+            {money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          </Text>
+          원
+        </Text>
+      </View>
+      <View style={styles.buttonZone}>
+        <Pressable
+          style={StyleSheet.compose(
+            styles.loginButton,
+            styles.loginButtonActive,
+          )}
+          onPress={onLogout}>
+          <Text style={styles.loginButtonText}>로그아웃</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  money: {
+    padding: 20,
+  },
+  moneyText: {
+    fontSize: 16,
+  },
+  buttonZone: {
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  loginButton: {
+    backgroundColor: 'gray',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  loginButtonActive: {
+    backgroundColor: 'blue',
+  },
+  loginButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+});
+
+export default Settings;
 ```
 
 ## 주문 화면 만들기(수락/거절)
