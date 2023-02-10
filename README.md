@@ -682,6 +682,8 @@ encrypted-storage에서 토큰 불러오기
 AppInner.tsx
 ```typescript
   // 앱 실행 시 토큰 있으면 로그인하는 코드
+  const dispatch = useAppDispatch();
+  
   useEffect(() => {
     const getTokenAndRefresh = async () => {
       try {
@@ -705,9 +707,9 @@ AppInner.tsx
             accessToken: response.data.data.accessToken,
           }),
         );
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        if ((error as AxiosError).response?.data.code === 'expired') {
+        if (error.response?.data.code === 'expired') {
           Alert.alert('알림', '다시 로그인 해주세요.');
         }
       }

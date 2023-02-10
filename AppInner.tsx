@@ -11,6 +11,12 @@ import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
 import { RootState } from './src/store/reducer';
 import useSocket from './src/hooks/useSocket';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import axios, {Axios, AxiosError} from 'axios';
+import Config from 'react-native-config';
+import userSlice from './src/slices/user';
+import {useAppDispatch} from './src/store';
+import {Alert} from 'react-native';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -28,22 +34,22 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppInner() {
+  const dispatch = useAppDispatch();
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
 
   const [socket, disconnect] = useSocket();
 
   useEffect(() => {
-    const helloCallback = (data: any) => {
+    const callback = (data: any) => {
       console.log(data);
     };
     if (socket && isLoggedIn) {
-      console.log(socket);
-      socket.emit('login', 'hello');
-      socket.on('hello', helloCallback);
+      socket.emit('acceptOrder', 'hello');
+      socket.on('order', callback);
     }
     return () => {
       if (socket) {
-        socket.off('hello', helloCallback);
+        socket.off('order', callback);
       }
     };
   }, [isLoggedIn, socket]);
@@ -54,6 +60,41 @@ function AppInner() {
       disconnect();
     }
   }, [isLoggedIn, disconnect]);
+
+  useEffect(() => {
+    const getTokenAndRefresh = async () => {
+      try {
+        const token = await EncryptedStorage.getItem('refreshToken');
+        if (!token) {
+          return;
+        }
+        const response = await axios.post(
+          `${Config.API_URL}/refreshToken`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        dispatch(
+          userSlice.actions.setUser({
+            name: response.data.data.name,
+            email: response.data.data.email,
+            accessToken: response.data.data.accessToken,
+          }),
+        );
+      } catch (error: any) {
+        console.error(error);
+        if (error.response?.data.code === 'expired') {
+          Alert.alert('알림', '다시 로그인 해주세요.');
+        }
+      } finally {
+        // TODO: 스플래시 스크린 없애기
+      }
+    };
+    getTokenAndRefresh();
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
