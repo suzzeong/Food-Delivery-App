@@ -33,6 +33,7 @@ function EachOrder({item}: Props) {
         {headers: {authorization: `Bearer ${accessToken}`}},
       );
       dispatch(orderSlice.actions.acceptOrder(item.orderId));
+      setLoading(false);
       navigation.navigate('Delivery');
     } catch (error: any) {
       let errorResponse = (error as AxiosError).response;
@@ -41,30 +42,8 @@ function EachOrder({item}: Props) {
         Alert.alert('알림', (errorResponse.data as any).message);
         dispatch(orderSlice.actions.rejectOrder(item.orderId));
       }
-      if (errorResponse?.status === 419) {
-        // 토큰 재발급하는 코드
-        const refreshToken = await EncryptedStorage.getItem('refreshToken');
-        const response = await axios.post(
-          `${Config.API_URL}/refreshToken`,
-          {},
-          {
-            headers: {
-              authorization: `Bearer ${refreshToken}`,
-            },
-          },
-        );
-        await axios.post(
-          `${Config.API_URL}/accept`,
-          {orderId: item.orderId},
-          {
-            headers: {
-              authorization: `Bearer ${response.data.data.accessToken}`,
-            },
-          },
-        );
-        
-      }
-    }
+      setLoading(true);
+    } 
   }, [navigation, dispatch, item, accessToken]);
 
   // 거절
