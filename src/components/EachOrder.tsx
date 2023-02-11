@@ -3,6 +3,7 @@ import axios, {Axios, AxiosError} from 'axios';
 import {useCallback, useState} from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import Config from 'react-native-config';
+import EncryptedStorage from 'react-native-encrypted-storage/lib/typescript/EncryptedStorage';
 import {useSelector} from 'react-redux';
 import {LoggedInParamList} from '../../AppInner';
 import orderSlice, {Order} from '../slices/order';
@@ -39,6 +40,29 @@ function EachOrder({item}: Props) {
         // 타인이 이미 수락한 경우
         Alert.alert('알림', (errorResponse.data as any).message);
         dispatch(orderSlice.actions.rejectOrder(item.orderId));
+      }
+      if (errorResponse?.status === 419) {
+        // 토큰 재발급하는 코드
+        const refreshToken = await EncryptedStorage.getItem('refreshToken');
+        const response = await axios.post(
+          `${Config.API_URL}/refreshToken`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${refreshToken}`,
+            },
+          },
+        );
+        await axios.post(
+          `${Config.API_URL}/accept`,
+          {orderId: item.orderId},
+          {
+            headers: {
+              authorization: `Bearer ${response.data.data.accessToken}`,
+            },
+          },
+        );
+        
       }
     }
   }, [navigation, dispatch, item, accessToken]);
