@@ -1120,7 +1120,7 @@ npx pod-install # ios 전용
 - [커밋 참조](https://github.com/ZeroCho/food-delivery-app/commit/36295cabf2cdab4ed68fa3b907c7b467101a02a5) (폴더 등 변경할 게 많음)
 *0.68 버전 이상부터는*
 [링크](https://www.inflearn.com/questions/583155) 참고해서 newarchitecture 부분의 이름도 수정해야 합니다.
-
+[링크](https://github.com/QuadFlask/react-native-naver-map)
 
 - [ios]Xcode로는 xcworkspace 파일을 열어야함(xcodeproj 열면 안됨, xcworkspace가 없다면 ios 폴더에서 pod install 한 번 입력해볼 것)
 - [ios]iOS Bundle ID: com.[원하는이름].fooddeliveryapp(ex: com.zerocho.fooddeliveryapp)로 수정
@@ -1165,6 +1165,13 @@ src/components/EachOrder.tsx
   </NaverMapView>
 </View>
 ```
+ - 빌드 잘 안될 때,
+```shell
+cd android
+gradlew clean
+react-native start --reset-cache
+```
+
 ## 위치 정보 가져오기
 권한 얻기(위치정보, 카메라, 갤러리)
 ```shell

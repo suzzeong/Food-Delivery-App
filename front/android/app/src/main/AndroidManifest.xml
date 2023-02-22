@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.fooddeliveryapp">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.suz.fooddeliveryapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- <uses-permission android:name="android.permission.CAMERA"/>
@@ -17,6 +17,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:allowBackup="false"
             android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="9rrwk2d5lj" />
         <!-- <meta-data android:name="com.dieam.reactnativepushnotification.notification_foreground" android:value="true"/>
         <meta-data android:name="com.dieam.reactnativepushnotification.notification_color" android:resource="@android:color/white"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions"/>
@@ -32,10 +35,7 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </service>
-        <meta-data
-                android:name="com.naver.maps.map.CLIENT_ID"
-                android:value="c5i0qvf959" /> -->
+        </service> -->
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"

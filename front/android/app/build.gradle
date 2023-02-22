@@ -95,14 +95,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.fooddeliveryapp"
+    // namespace "com.suz.fooddeliveryapp"
     defaultConfig {
-        applicationId "com.fooddeliveryapp"
+        applicationId "com.suz.fooddeliveryapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        resValue "string", "build_config_package", "com.fooddeliveryapp"
+        resValue "string", "build_config_package", "com.suz.fooddeliveryapp"
     }
 
     splits {
