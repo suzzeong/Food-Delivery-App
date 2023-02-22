@@ -1,13 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.fooddeliveryapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/> -->
 
     <application
             android:usesCleartextTraffic="true"
@@ -17,7 +17,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:allowBackup="false"
             android:theme="@style/AppTheme">
-        <meta-data android:name="com.dieam.reactnativepushnotification.notification_foreground" android:value="true"/>
+        <!-- <meta-data android:name="com.dieam.reactnativepushnotification.notification_foreground" android:value="true"/>
         <meta-data android:name="com.dieam.reactnativepushnotification.notification_color" android:resource="@android:color/white"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions"/>
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher"/>
@@ -35,7 +35,7 @@
         </service>
         <meta-data
                 android:name="com.naver.maps.map.CLIENT_ID"
-                android:value="c5i0qvf959" />
+                android:value="c5i0qvf959" /> -->
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name"
@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
     </application>
-    <queries>
+    <!-- <queries>
         <package android:name="com.skt.tmap.ku" />
-    </queries>
+    </queries> -->
 </manifest>
