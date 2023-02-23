@@ -17,6 +17,7 @@ import orderSlice, {Order} from '../slices/order';
 import {useAppDispatch} from '../store';
 import {RootState} from '../store/reducer';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
+import getDistanceFromLatLonInKm from '../util';
 
 interface Props {
   item: Order;
@@ -70,6 +71,15 @@ function EachOrder({item}: Props) {
         <Text style={styles.eachInfo}>
           {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
         </Text>
+        <Text style={styles.eachInfo}>
+          {getDistanceFromLatLonInKm(
+            start.latitude,
+            start.longitude,
+            end.latitude,
+            end.longitude,
+          ).toFixed(1)}
+          km
+        </Text>
         <Text>삼성동</Text>
         <Text>왕십리동</Text>
       </Pressable>
@@ -87,6 +97,7 @@ function EachOrder({item}: Props) {
               center={{
                 zoom: 10,
                 tilt: 50,
+                bearing: 0,
                 latitude: (start.latitude + end.latitude) / 2,
                 longitude: (start.longitude + end.longitude) / 2,
               }}>
