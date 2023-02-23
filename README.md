@@ -233,7 +233,9 @@ export default App;
 - Screen options.headerRight로 우측 버튼(useLayoutEffect)
 - [옵션 목록](https://reactnavigation.org/docs/screen-options)
 
-## 실제 라우터 만들기 (ch1)
+# 리액트 내비게이션[ch1]
+
+## 실제 라우터 만들기
 ```shell
 npm install @react-navigation/bottom-tabs
 ```
@@ -417,7 +419,10 @@ const DismissKeyboardView: React.FC<{
 
 export default DismissKeyboardView;
 ```
-## 서버 요청 보내기(ch2)
+
+# 서버 API와 연동하기[ch2]
+
+## 서버 요청 보내기
 
 back 서버 실행 필요, DB 없이도 되게끔 만들어둠. 서버 재시작 시 데이터는 날아가니 주의
 ```shell
@@ -654,7 +659,9 @@ src/pages/Settings.tsx
 
 ```
 
-## 실제 주문 받기[ch3]
+# 주문 수락, 거절, 완료[ch3]
+
+## 실제 주문 받기
 socket.io에서 주문 내역 받아서 store에 넣기
 
 AppInner.tsx
@@ -1094,7 +1101,9 @@ axios.interceptor 설정하기
   }, [dispatch]);
 ```
 
-## 네이버 지도 사용하기[ch4]
+# 네이버맵에 내 위치 표시하기[ch4]
+
+## 네이버 지도 사용하기
 ```shell
 npm i react-native-nmap --force
 ```
@@ -1116,7 +1125,7 @@ Podfile
 npx pod-install # ios 전용
 ```
 
-- 안드로이드 앱 패키지 이름: com.[원하는이름].fooddeliveryapp (ex: com.zerocho.fooddeliveryapp)
+- 안드로이드 앱 패키지 이름: com.[원하는이름].fooddeliveryapp (ex: com.suz.fooddeliveryapp)
 - [커밋 참조](https://github.com/ZeroCho/food-delivery-app/commit/36295cabf2cdab4ed68fa3b907c7b467101a02a5) (폴더 등 변경할 게 많음)
 *0.68 버전 이상부터는*
 [링크](https://www.inflearn.com/questions/583155) 참고해서 newarchitecture 부분의 이름도 수정해야 합니다.
@@ -1204,6 +1213,7 @@ export default getDistanceFromLatLonInKm;
 
 ## 위치 정보 가져오기
 권한 얻기(위치정보, 카메라, 갤러리)
+[링크](https://github.com/zoontek/react-native-permissions)
 ```shell
 npm i react-native-permissions
 ```
@@ -1235,7 +1245,7 @@ ios/FoodDeliveryApp/Info.plist
 <string>배송완료 사진 선택을 위해 라이브러리 접근 권한이 필요합니다.</string>
 ```
 android/app/src/main/AndroidManifest.xml
-```
+```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
