@@ -1681,7 +1681,8 @@ npx pod-install # ios 전용
 # 네이티브 모듈 수정하기[ch5]
 
 ## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음
-Native Module Patching
+- fork 떠서 package.json 에서 "react-native-nmap": "https://github.com/자기 깃헙이름/react-native-nmap" 으로 수정
+- Native Module Patching (최근 방식)
 ```shell
 npm i patch-package
 ```
