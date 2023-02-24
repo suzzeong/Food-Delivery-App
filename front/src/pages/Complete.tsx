@@ -112,6 +112,7 @@ function Complete() {
       await axios.post(`${Config.API_URL}/complete`, formData, {
         headers: {
           authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
       Alert.alert('알림', '완료처리 되었습니다.');
@@ -148,6 +149,7 @@ function Complete() {
               : StyleSheet.compose(styles.button, styles.buttonDisabled)
           }
           onPress={onComplete}>
+          {/* 완료 버튼 누를 시 disabled */}
           <Text style={styles.buttonText}>완료</Text>
         </Pressable>
       </View>
