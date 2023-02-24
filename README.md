@@ -1678,7 +1678,9 @@ npx pod-install # ios 전용
 - base64로 이미지를 텍스트꼴로 표현 가능(용량 33% 증가)
 - resizeMode: cover(꽉 차게), contain(딱 맞게), stretch(비율 무시하고 딱 맞게), repeat(반복되게), center(중앙 정렬)
 
-## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음[ch5]
+# 네이티브 모듈 수정하기[ch5]
+
+## 사진 찍을 때 이미지를 카메라롤/갤러리에 저장하고 싶음
 Native Module Patching
 ```shell
 npm i patch-package

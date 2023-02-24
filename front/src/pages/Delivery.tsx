@@ -8,11 +8,11 @@ const Stack = createNativeStackNavigator();
 function Delivery() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Ing" component={Ing} options={{headerShown: false}} />
+      <Stack.Screen name="Ing" component={Ing} options={{title: '내 오더'}} />
       <Stack.Screen
         name="Complete"
         component={Complete}
-        options={{headerShown: false}}
+        options={{title: '완료하기'}}
       />
     </Stack.Navigator>
   );

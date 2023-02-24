@@ -3,6 +3,7 @@ import {
   Alert,
   Dimensions,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -28,23 +29,30 @@ function Complete() {
   const dispatch = useAppDispatch();
   const route = useRoute<RouteProp<LoggedInParamList>>();
   const navigation = useNavigation<NavigationProp<LoggedInParamList>>();
-  const [image, setImage] =
-    useState<{uri: string; name: string; type: string}>();
+  const [image, setImage] = useState<{
+    uri: string;
+    name: string;
+    type: string;
+  }>();
   const [preview, setPreview] = useState<{uri: string}>();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
+
+  // { uri: '경로', name: '파일이름', type: '확장자' }
+  // multipart/form-data 통해서 업로드
 
   const onResponse = useCallback(async (response: any) => {
     console.log(response.width, response.height, response.exif);
     setPreview({uri: `data:${response.mime};base64,${response.data}`});
     const orientation = (response.exif as any)?.Orientation;
     console.log('orientation', orientation);
+
     return ImageResizer.createResizedImage(
-      response.path,  // 파일 경로 (file:///안드로이드 경로)
-      600,  // width
-      600,  // height
-      response.mime.includes('jpeg') ? 'JPEG' : 'PNG',  // format
-      100,  // quality
-      0,    // rotation
+      response.path, // 파일 경로 (file:///안드로이드 경로)
+      600, // width
+      600, // height
+      response.mime.includes('jpeg') ? 'JPEG' : 'PNG', // format
+      100, // quality
+      0, // rotation
     ).then(r => {
       console.log(r.uri, r.name);
 
@@ -77,18 +85,29 @@ function Complete() {
   }, [onResponse]);
 
   const orderId = route.params?.orderId;
+  
   const onComplete = useCallback(async () => {
     if (!image) {
       Alert.alert('알림', '파일을 업로드해주세요.');
       return;
     }
+    console.log('orderId', orderId);
+    console.log('image', image);
     if (!orderId) {
       Alert.alert('알림', '유효하지 않은 주문입니다.');
       return;
     }
     const formData = new FormData();
-    formData.append('image', image);
     formData.append('orderId', orderId);
+    formData.append('image', {
+      name: image.name,
+      type: image.type || 'image/jpeg',
+      uri:
+        Platform.OS === 'android'
+          ? image.uri
+          : image.uri.replace('file://', ''),
+    });
+    console.log(formData.getParts());
     try {
       await axios.post(`${Config.API_URL}/complete`, formData, {
         headers: {
@@ -150,6 +169,7 @@ const styles = StyleSheet.create({
   previewImage: {
     height: Dimensions.get('window').height / 3,
     resizeMode: 'contain',
+    // cover(꽉 차게), contain(딱 맞게), stretch(비율 무시하고 딱 맞게), repeat(반복되게), center(중앙 정렬)
   },
   buttonWrapper: {flexDirection: 'row', justifyContent: 'center'},
   button: {
