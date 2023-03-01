@@ -68,7 +68,7 @@ function Complete() {
     return ImagePicker.openCamera({
       includeBase64: true,
       includeExif: true,
-      // saveToPhotos: true,
+      saveToPhotos: true,
     })
       .then(onResponse)
       .catch(console.log);
@@ -85,7 +85,7 @@ function Complete() {
   }, [onResponse]);
 
   const orderId = route.params?.orderId;
-  
+
   const onComplete = useCallback(async () => {
     if (!image) {
       Alert.alert('알림', '파일을 업로드해주세요.');
