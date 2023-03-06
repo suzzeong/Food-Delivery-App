@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.skt.Tmap_1.75">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/front/android/app/libs/com.skt.Tmap_1.75.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
