@@ -1,4 +1,4 @@
-package com.suz.fooddeliveryapp;
+package com.suz;
 
 import android.util.Log;
 
