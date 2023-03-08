@@ -10,7 +10,6 @@ import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
 import com.suz.fooddeliveryapp.TMapPackage;
-// import com.microsoft.codepush.react.CodePush;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -26,7 +25,6 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
           packages.add(new TMapPackage());
           return packages;
         }
@@ -46,10 +44,6 @@ public class MainApplication extends Application implements ReactApplication {
           return BuildConfig.IS_HERMES_ENABLED;
         }
 
-        // @Override
-        // protected String getJSBundleFile() {
-        //   return CodePush.getJSBundleFile();
-        // }
       };
 
   @Override
