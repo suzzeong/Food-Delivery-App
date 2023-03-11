@@ -49,7 +49,7 @@
             </intent-filter>
         </activity>
     </application>
-    <queries>
+    <!-- <queries>
         <package android:name="com.skt.tmap.ku" />
-    </queries>
+    </queries> -->
 </manifest>
