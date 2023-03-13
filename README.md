@@ -417,7 +417,7 @@ npm i react-native-keyboard-aware-scrollview
 ```
 
 - 타이핑이 없으므로 직접 타입 추가해야 함
-- react-native-keyboard-aware-scroll-view 라이브러리는 타입이 있음
+- react-native-keyboard-aware-scroll-view 라이브러리는 타입이 있음 (타입 추가 안해도 됨)
 
 types/react-native-keyboard-aware-scroll-view
 

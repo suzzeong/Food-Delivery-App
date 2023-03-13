@@ -8,3 +8,5 @@ declare module 'react-native-keyboard-aware-scrollview' {
   class KeyboardAwareScrollView extends KeyboardAwareScrollViewComponent {}
   export {KeyboardAwareScrollView};
 }
+
+// react-native-keyboard-aware-scroll-view 를 쓰면 ts 다 적용 됨
