@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect} from 'react';
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,7 +9,7 @@ import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
-import { RootState } from './src/store/reducer';
+import {RootState} from './src/store/reducer';
 import useSocket from './src/hooks/useSocket';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import axios, {Axios, AxiosError} from 'axios';
@@ -19,6 +19,7 @@ import {useAppDispatch} from './src/store';
 import {Alert} from 'react-native';
 import orderSlice from './src/slices/order';
 import usePermissions from './src/hooks/usePermissions';
+import SplashScreen from 'react-native-splash-screen';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -78,7 +79,7 @@ function AppInner() {
   useEffect(() => {
     const callback = (data: any) => {
       console.log(data);
-      dispatch(orderSlice.actions.addOrder(data))
+      dispatch(orderSlice.actions.addOrder(data));
     };
     if (socket && isLoggedIn) {
       socket.emit('acceptOrder', 'hello');
@@ -98,11 +99,13 @@ function AppInner() {
     }
   }, [isLoggedIn, disconnect]);
 
+  // 앱 실행 시, 토큰 있으면 로그인하는 코드
   useEffect(() => {
     const getTokenAndRefresh = async () => {
       try {
         const token = await EncryptedStorage.getItem('refreshToken');
         if (!token) {
+          SplashScreen.hide();
           return;
         }
         const response = await axios.post(
@@ -128,6 +131,7 @@ function AppInner() {
         }
       } finally {
         // TODO: 스플래시 스크린 없애기
+        SplashScreen.hide();
       }
     };
     getTokenAndRefresh();

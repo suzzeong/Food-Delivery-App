@@ -1912,16 +1912,16 @@ npm i react-native-splash-screen
 - android/app/src/main/res/drawable 폴더 만들고 그 안에 launch_screen.png 넣기
   AppInner.tsx
 
-```
+```tsx
 ...
         const token = await EncryptedStorage.getItem('refreshToken');
         if (!token) {
-          SplashScreen.hide();
+          SplashScreen.hide(); // here
           return;
         }
         ...
       } finally {
-        SplashScreen.hide();
+        SplashScreen.hide();  // here
       }
     };
     getTokenAndRefresh();
