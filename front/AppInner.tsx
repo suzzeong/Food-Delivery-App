@@ -43,9 +43,18 @@ function AppInner() {
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   const [socket, disconnect] = useSocket();
 
+  // const clearAll = async () => {
+  //   try {
+  //     await EncryptedStorage.clear();
+  //   } catch (e) {
+  //     // 오류 예외 처리
+  //   }
+  // };
+
   usePermissions();
 
   useEffect(() => {
+    // clearAll();
     axios.interceptors.response.use(
       response => {
         // console.log(response);
@@ -158,8 +167,6 @@ function AppInner() {
               headerShown: false,
               title: '지도',
               tabBarIcon: () => <FontAwesome5 name="map" size={20} />,
-              // headerTitleStyle: {fontWeight: 'bold'},
-              // tabBarLabelStyle: {fontSize: 12},
             }}
           />
           <Tab.Screen
@@ -167,8 +174,8 @@ function AppInner() {
             component={Settings}
             options={{
               title: '내 정보',
-              tabBarIcon: () => <FontAwesome name="gear" size={20} />,
               unmountOnBlur: true,
+              tabBarIcon: () => <FontAwesome name="gear" size={20} />,
             }}
           />
         </Tab.Navigator>
