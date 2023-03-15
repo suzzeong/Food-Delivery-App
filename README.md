@@ -1984,11 +1984,15 @@ src/pages/Settings.tsx
 
 ```shell
 npm i @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/messaging
+
 npm i react-native-push-notification @react-native-community/push-notification-ios
+
 npm i -D @types/react-native-push-notification
+
 npx pod-install
 ```
 
+[android] [따라할 것](https://github.com/zo0r/react-native-push-notification)
 [ios] [따라할 것](https://github.com/react-native-push-notification/ios)
 
 - firebase 프로젝트 설정 - Admin SDK - Node.js - 새 비공개키 생성 - back 폴더 안에 넣고 app.js 소스 수정
