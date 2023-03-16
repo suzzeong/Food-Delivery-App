@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // store -> reducer(state) -> user slice, order slice
 // ex) state.user.email, state.order, state.ui.loading
@@ -12,6 +12,7 @@ const initialState = {
   email: '',
   accessToken: '',
   money: 0,
+  phoneToken: '',
 };
 
 const userSlice = createSlice({
@@ -29,7 +30,10 @@ const userSlice = createSlice({
     },
     setAccessToken(state, action) {
       state.accessToken = action.payload;
-    }
+    },
+    setPhoneToken(state, action) {
+      state.phoneToken = action.payload;
+    },
   },
   extraReducers: builder => {
     // 비동기 액션
