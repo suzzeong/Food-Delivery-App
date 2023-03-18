@@ -2151,9 +2151,15 @@ iOS 개발자 멤버쉽 가입 필요
 npm i react-native-code-push
 npm install appcenter appcenter-analytics appcenter-crashes
 npm i -g appcenter-cli
+
 appcenter login
-appcenter codepush deployment list -a zerohch0/food-delivery-app-android -k
+appcenter codepush deployment list -a su981006-naver.com/food-delivery-app-android -k
 ```
+
+- appcenter > distribute > codepush
+- these instructions 클릭해서 추가 작업
+- Staging: 개발용
+- Production: 실제제품
 
 - android/app/src/main/assets/appcenter-config.json
 - android/app/src/main/res/values/strings.xml 수정
@@ -2161,10 +2167,24 @@ appcenter codepush deployment list -a zerohch0/food-delivery-app-android -k
 - [ios] ios/AppCenter-Config.plist
 - [ios] [추가 작업](https://github.com/microsoft/react-native-code-push/blob/master/docs/setup-ios.md)
 
+package.json
+
+```json
+"codepush:android": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
+"codepush:ios": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
+"bundle:android": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/index.android.bundle --dev false --entry-file index.js --platform android --sourcemap-output build/CodePush/index.android.bundle.map",
+"bundle:ios": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/main.jsbundle --dev false --entry-file index.js --platform ios --sourcemap-output build/CodePush/main.jsbundle.map",
+```
+
+- package.json version에 대하여
+- "version": "0.0.1" 버전은 점을 기준으로 총 세가지로 나눌 수 있다. 제일 앞의 자리는 메이저 즉, 다른 버전과 호환할 수 없는 자리다. 그 말인 즉슨, "0.0.1" 버전과 "1.0.1" 버전은 호환되지 않는다는 뜻이다. 두번째 중간에 있는 자리는 마이너 자리다. 앞의 자리가 같다면 호환이 가능하도록 수정이 되었지만, 기존 사람들이 버전을 올려도 깨지지 않는다. 마지막 자리는 단순한 버그 패치들이다. 코드푸쉬로 해결할 수 있는 부분은 마지막 세번째 자리를 업그레이드 시키면 된다.
+- 앱스토어 출시할 때, 심사 중에는 코드푸쉬 하면 거절되기 때문에 하면 안됨
+- 실제 예시는 package.json 참조
+
 App.tsx
 
 ```typescript jsx
-import codePush from "react-native-code-push";
+import CodePush, { CodePushOptions } from "react-native-code-push";
 
 const codePushOptions: CodePushOptions = {
   checkFrequency: CodePush.CheckFrequency.MANUAL,
@@ -2177,17 +2197,8 @@ const codePushOptions: CodePushOptions = {
 };
 function App() {}
 
-export default codePush(codePushOptions)(App);
+export default CodePush(codePushOptions)(App);
 ```
-
-```package.json
-"codepush:android": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
-"codepush:ios": "appcenter codepush release-react -a 아이디/앱이름 -d 배포이름 --sourcemap-output --output-dir ./build -m -t 타겟버전",
-"bundle:android": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/index.android.bundle --dev false --entry-file index.js --platform android --sourcemap-output build/CodePush/index.android.bundle.map",
-"bundle:ios": "react-native bundle --assets-dest build/CodePush --bundle-output build/CodePush/main.jsbundle --dev false --entry-file index.js --platform ios --sourcemap-output build/CodePush/main.jsbundle.map",
-```
-
-- 실제 예시는 package.json 참조
 
 ## iOS Pod 관련
 
