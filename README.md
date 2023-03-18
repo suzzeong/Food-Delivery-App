@@ -2210,11 +2210,86 @@ export default CodePush(codePushOptions)(App);
 - pod install: npx pod-install 역할 Podfile.lock에 따라 설치
 - pod install --repo-update: pod들 설치하면서 최신으로 유지
 
-## Hermes 켜기
+## 안드로이드 앱 배포 과정
+
+### Hermes 켜기
 
 시작 성능 빨라지고, 메모리 사용량 적고, 앱 사이즈 작아짐
 
 [헤르메스 켜기](https://reactnative.dev/docs/hermes)
+
+```tsx
+def enableSeparateBuildPerCPUArchitecture = true
+def enableProguardInReleaseBuilds = true
+
+android {
+  signingConfigs {  // 추가
+    debug {
+      storeFile file('debug.keystore')
+      storePassword 'android'
+      keyAlias 'androiddebugkey'
+      keyPassword 'android'
+    }
+    release {
+      if (project.hasProperty('RELEASE_STORE_FILE')) {
+          storeFile file(RELEASE_STORE_FILE)
+          storePassword RELEASE_STORE_PASSWORD
+          keyAlias RELEASE_KEY_ALIAS
+          keyPassword RELEASE_KEY_PASSWORD
+      }
+    }
+  }
+  buildTypes {
+    debug {
+      signingConfig signingConfigs.debug // 추가
+    }
+    release {
+      signingConfig signingConfigs.debug // 추가
+    }
+  }
+}
+```
+
+### 키 저장소 비밀번호 설정
+
+```shell
+keytool -genkey -v -keystore fooddeliveryapp.keystore -alias fooddeliveryappkey -keyalg RSA -keysize 2048 -validity 10000
+```
+
+- 키 저장소 비밀번호 입력: su981006
+- 인적사항들 입력한 후 마지막 질문에 Y를 눌러준다
+- 그러면 android>app에 fooddeliveryapp.keystore 파일이 생성됨(다른 위치에 생성될 수도 있음, 확인 후 위치 변경해주기)
+
+- android > gradle.properties 파일에 추가하기
+
+```
+RELEASE_STORE_FILE=fooddeliveryapp.keystore
+RELEASE_KEY_ALIAS=fooddeliveryappkey
+RELEASE_STORE_PASSWORD=su981006
+RELEASE_KEY_PASSWORD=su981006
+```
+
+- android > app > build.gradle lintOptions 추가
+
+```
+android {
+  lintOptions {
+    checkReleaseBuilds false
+    // Or, if you prefer, you can continue to check for errors in release builds,
+    // but continue the build even when errors are found:
+    abortOnError false
+  }
+}
+```
+
+- package.json
+
+```json
+"scripts": {
+  "aab:android": "npm ci && cd android && ./gradlew bundleRelease && cd .. && open android/app/build/outputs/bundle/release",
+  "apk:android": "npm ci && cd android && ./gradlew assembleRelease && cd .. && open android/app/build/outputs/apk/release",
+}
+```
 
 # 꿀팁들
 
