@@ -1,4 +1,3 @@
-- [ZeroCho_food-delivery-app](https://github.com/ZeroCho/food-delivery-app)
 - [Delivery icons created by dreamicons - Flaticon](https://www.flaticon.com/free-icons/delivery)
 
 # 첫 시작(setting)
