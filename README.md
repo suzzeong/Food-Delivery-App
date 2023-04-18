@@ -1,3 +1,16 @@
+#Food Delivery App (음식 배달 앱)
+
+개요: 라이더 전용 음식 배달 어플리케이션
+스킬: React-native, Typescript, socket.io , Axios , react-redux, firebase
+담당역할
+- splash screen 적용 및 로그인 API 연동
+- TMap Open API를 통해 TMap에 연동하여 내비게이션 지원
+- socket.io를 이용하여 라이더들과의 실시간 양방향 통신 가능
+- react-native-nmap 라이브러리로 네이버 지도에 내 위치에서 가게 위치까지, 가게 위치에서 배달 장소까지 거리 표시
+- encrypted-storage로 데이터 유지 관리 (로그인, 로그아웃, 회원가입)
+- Firebase Cloud Messaging을 통해 배송완료 등 푸시 알림 기능 구현
+
+
 ## 폴더 구조
 
 - android: 안드로이드 네이티브 폴더
