@@ -4,25 +4,24 @@
 라이더 전용 음식 배달 어플리케이션 <br/>
 
 ## 기간
-2023. 02. 22 ~ 2023. 03. 18
+2023.02.22 ~ 2023.03.18 <br/>
 
 ## 팀 구성
-Frontend 1 - 개인
+Frontend 1 - 개인 <br/>
 
 ## 스킬
-`React-native`, `Typescript`, `socket.io`, `Axios`, `react-redux`, `firebase`
+`React-native`, `Typescript`, `socket.io`, `Axios`, `react-redux`, `firebase` <br/>
 
-## 담당역할 <br/>
+## 담당역할
 - splash screen 적용 및 로그인 API 연동
 - TMap Open API를 통해 TMap에 연동하여 내비게이션 지원
 - socket.io를 이용하여 라이더들과의 실시간 양방향 통신 가능
 - react-native-nmap 라이브러리로 네이버 지도에 내 위치에서 가게 위치까지, 가게 위치에서 배달 장소까지 거리 표시
 - encrypted-storage로 데이터 유지 관리 (로그인, 로그아웃, 회원가입)
 - Firebase Cloud Messaging을 통해 배송완료 등 푸시 알림 기능 구현
-
+<br/>
 
 ## 폴더 구조
-
 - android: 안드로이드 네이티브 폴더
 - ios: ios 네이티브 폴더
 - node_modules: 노드 라이브러리
@@ -35,10 +34,9 @@ Frontend 1 - 개인
 - metro.config.js: 메트로 설정 파일(웹팩 대신 사용)
 - tsconfig.json: 타입스크립트 설정
 - android/app/src/main/java/com/fooddeliveryapp/MainActivity.java: 안드로이드 액티비티에서 js엔진 통해 리액트 코드 실행 + bridge로 소통
-
+<br/>
 
 ## 리액트 네이티브 폴더 구조
-
 - src 폴더 생성(지금 바로 생성 안 하고 폴더 안에 파일이 들 때 생성해도 됨)
 - src/assets: 이미지, 폰트, 비디오, gif 등
 - src/constants: 상수
