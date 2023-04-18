@@ -1,16 +1,20 @@
 # Food Delivery App (음식 배달 앱)
 
 ## 개요
-라이더 전용 음식 배달 어플리케이션 <br/>
+라이더 전용 음식 배달 어플리케이션
+<br/>
 
 ## 기간
-2023.02.22 ~ 2023.03.18 <br/>
+2023.02.22 ~ 2023.03.18
+<br/>
 
 ## 팀 구성
-Frontend 1 - 개인 <br/>
+Frontend 1 - 개인
+<br/>
 
 ## 스킬
-`React-native`, `Typescript`, `socket.io`, `Axios`, `react-redux`, `firebase` <br/>
+`React-native`, `Typescript`, `socket.io`, `Axios`, `react-redux`, `firebase`
+<br/>
 
 ## 담당역할
 - splash screen 적용 및 로그인 API 연동
